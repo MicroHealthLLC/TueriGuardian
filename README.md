@@ -54,3 +54,6 @@ By offering sanitization, detection of harmful language, prevention of data leak
 - [Relevance](./docs/output_scanners/relevance.md)
 - [Sensitive](./docs/output_scanners/sensitive.md)
 - [Sentiment](./docs/output_scanners/sentiment.md)
+
+### Acknowledgment
+We learned the design and reused code from https://github.com/protectai/llm-guard
