@@ -1,0 +1,2 @@
+class TueriValidationError(ValueError):
+    pass

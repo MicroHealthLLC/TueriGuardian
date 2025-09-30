@@ -1,0 +1,343 @@
+app:
+  name: ${APP_NAME:Tueri API}
+  log_level: ${LOG_LEVEL:DEBUG}
+  log_json: ${LOG_JSON:true}
+  scan_fail_fast: ${SCAN_FAIL_FAST:false}
+  scan_prompt_timeout: ${SCAN_PROMPT_TIMEOUT:30}
+  scan_output_timeout: ${SCAN_OUTPUT_TIMEOUT:30}
+  lazy_load: ${LAZY_LOAD:false}
+
+rate_limit:
+  enabled: ${RATE_LIMIT_ENABLED:false}
+  limit: ${RATE_LIMIT_LIMIT:100/minute}
+
+auth:
+  type: http_bearer
+  token: ${AUTH_TOKEN:}
+
+tracing:
+  exporter: ${TRACING_EXPORTER:console}
+  endpoint: ${TRACING_OTEL_ENDPOINT:}  # Example: "<traces-endpoint>/v1/traces"
+
+metrics:
+  exporter: ${METRICS_TYPE:prometheus}
+  endpoint: ${METRICS_ENDPOINT:}  # Example: "<metrics-endpoint>/v1/metrics"
+
+# Scanners are applied in the order they are listed here.
+# input_scanners:
+#   - type: Anonymize
+#     params:
+#       threshold: 0.50 # Higher value = less aggressive PII removal
+#       # Removed use_faker and model_path, no longer needed
+#   - type: BanTopics
+#     params:
+#       topics: [
+#         # Core Safety & Legal Compliance
+#         "violence and physical harm to individuals",
+#         "hate speech and discriminatory content",
+#         "illegal activities and criminal activity",
+#         "pornography, erotica, adult and sexual content",
+#         "terrorism and indiscriminate Weapons",
+#         "self-harm and suicide",
+        
+#         # Professional Liability
+#         "medical diagnosis without professional oversight",
+#         "legal advice without professional qualification",
+#         "tax evasion and financial fraud methods",
+#         "insurance fraud and illegal practices",
+        
+#         # Information Security
+#         "cybersecurity exploits and hacking techniques",
+#         "software piracy and copyright infringement",
+        
+#         # Workplace Appropriateness
+#         "political opinions and partisan commentary",
+#         "religious discussions and theological debates",
+#         "personal relationship advice and dating guidance",
+#         "substance abuse and drug-related discussions",
+#         "gambling advice and betting strategies",
+#         "harassment and workplace bullying",   
+
+#         # Content Quality & Misinformation
+#         "conspiracy theories and misinformation spreading",
+#         "defamatory statements about individuals or organizations",
+#         "spam and deceptive content generation",
+#         "gender identity and sexual orientation"
+#       ]
+#       threshold: 0.6
+#       model_max_length: 256
+#   - type: MaskCode
+#     params:
+#       threshold: 0.97
+#       model_max_length: 256
+#   - type: InvisibleText
+#     params: { }
+#   - type: PromptInjection
+#     params:
+#       threshold: 0.95
+#       match_type: truncate_head_tail
+#       model_max_length: 256
+#   - type: Regex
+#     params:
+#       patterns: ["Bearer [A-Za-z0-9-._~+/]+"]
+#       is_blocked: true
+#       match_type: search
+#       redact: true
+#   - type: Secrets
+#     params:
+#       redact_mode: "all"
+# #  - type: Toxicity
+# #    params:
+# #      threshold: 0.95
+# #      model_max_length: 256
+
+# #------------
+
+# output_scanners:
+#   - type: BanTopics
+#     params:
+#       topics: [
+#         # Core Safety & Legal Compliance
+#         "violence and physical harm to individuals",
+#         "hate speech and discriminatory content",
+#         "illegal activities and criminal activity",
+#         "pornography, erotica, adult and sexual content",
+#         "terrorism and indiscriminate Weapons",
+#         "self-harm and suicide",
+        
+#         # Professional Liability
+#         "medical diagnosis without professional oversight",
+#         "legal advice without professional qualification",
+#         "tax evasion and financial fraud methods",
+#         "insurance fraud and illegal practices",
+        
+#         # Information Security
+#         "cybersecurity exploits and hacking techniques",
+#         "software piracy and copyright infringement",
+        
+#         # Workplace Appropriateness
+#         "political opinions and partisan commentary",
+#         "religious discussions and theological debates",
+#         "personal relationship advice and dating guidance",
+#         "substance abuse and drug-related discussions",
+#         "gambling advice and betting strategies",
+#         "harassment and workplace bullying",   
+
+#         # Content Quality & Misinformation
+#         "conspiracy theories and misinformation spreading",
+#         "defamatory statements about individuals or organizations",
+#         "spam and deceptive content generation",
+#         "gender identity and sexual orientation"
+#       ]
+#       threshold: 0.6
+#   - type: Bias
+#     params:
+#       threshold: 0.97
+#       model_max_length: 256
+#   - type: Deanonymize
+#     params:
+#       matching_strategy: "exact"
+#   - type: FactualConsistency
+#     params:
+#       minimum_score: 0.5
+# #  - type: JSON
+# #    params:
+# #      required_elements: 0
+# #      repair: true
+#   - type: BadURL
+#     params:
+#       threshold: 0.95
+#   - type: Regex
+#     params:
+#       patterns: ["Bearer [A-Za-z0-9-._~+/]+"]
+#       is_blocked: true
+#       match_type: search
+#       redact: true
+#   - type: Sensitive
+#     params:
+#       redact: false
+#       threshold: 0.50 # Higher value = less aggressive PII removal
+# #  - type: Toxicity
+# #    params:
+# #      threshold: 0.6
+# #      model_max_length: 256
+
+# # app:
+# #   name: ${APP_NAME:Tueri API}
+# #   log_level: ${LOG_LEVEL:INFO}
+# #   log_json: ${LOG_JSON:true}
+# #   scan_fail_fast: ${SCAN_FAIL_FAST:true}
+# #   scan_prompt_timeout: ${SCAN_PROMPT_TIMEOUT:30}
+# #   scan_output_timeout: ${SCAN_OUTPUT_TIMEOUT:30}
+# #   lazy_load: ${LAZY_LOAD:true}
+
+# # rate_limit:
+# #   enabled: ${RATE_LIMIT_ENABLED:false}
+# #   limit: ${RATE_LIMIT_LIMIT:100/minute}
+
+# # auth:
+# #  type: http_bearer
+# #  token: ${AUTH_TOKEN:}
+
+# # tracing:
+# #   exporter: ${TRACING_EXPORTER:console}
+# #   endpoint: ${TRACING_OTEL_ENDPOINT:}  # Example: "<traces-endpoint>/v1/traces"
+
+# # metrics:
+# #   exporter: ${METRICS_TYPE:prometheus}
+# #   endpoint: ${METRICS_ENDPOINT:}  # Example: "<metrics-endpoint>/v1/metrics"
+
+# # # Scanners are applied in the order they are listed here.
+# # input_scanners:
+# #   - type: Anonymize
+# #     params:
+# #       use_faker: false
+# #       threshold: 0.9
+# #       # model_path: "./distilbert_finetuned_ai4privacy_v2"
+# #   # - type: BanCode
+# #   #   params:
+# #   #     threshold: 0.97
+# #   #     model_max_length: 256
+# #   # - type: BanCompetitors
+# #   #   params:
+# #   #     competitors: ["facebook"]
+# #   #     threshold: 0.75
+# #   # - type: BanSubstrings
+# #   #   params:
+# #   #     substrings: ["test"]
+# #   #     match_type: "word"
+# #   #     case_sensitive: false
+# #   #     redact: false
+# #   #     contains_all: false
+# #   - type: BanTopics
+# #     params:
+# #       topics: ["violence"]
+# #       threshold: 0.95
+# #       model_max_length: 256
+# # #  - type: Code
+# # #    params:
+# # #      languages: ["Python"]
+# # #      is_blocked: true
+# #   # - type: Gibberish
+# #   #   params:
+# #   #     threshold: 0.97
+# #   #     model_max_length: 256
+# #   - type: InvisibleText
+# #     params: { }
+# #   # - type: Language
+# #   #   params:
+# #   #     valid_languages: [ "en" ]
+# #   #     model_max_length: 256
+# #   - type: PromptInjection
+# #     params:
+# #       threshold: 0.95
+# #       match_type: truncate_head_tail
+# #       model_max_length: 256
+# #   - type: Regex
+# #     params:
+# #       patterns: ["Bearer [A-Za-z0-9-._~+/]+"]
+# #       is_blocked: true
+# #       match_type: search
+# #       redact: true
+# #   - type: Secrets
+# #     params:
+# #       redact_mode: "all"
+# #   # - type: Sentiment
+# #   #   params:
+# #   #     threshold: 0.0
+# #   # - type: TokenLimit
+# #   #   params:
+# #   #     limit: 4096
+# #   #     encoding_name: "cl100k_base"
+# #   - type: Toxicity
+# #     params:
+# #       threshold: 0.95
+# #       model_max_length: 256
+
+
+# # output_scanners:
+# #   # - type: BanCompetitors
+# #   #   params:
+# #   #     competitors: ["facebook"]
+# #   #     threshold: 0.75
+# #   # - type: BanSubstrings
+# #   #   params:
+# #   #     substrings: ["test"]
+# #   #     match_type: "word"
+# #   #     case_sensitive: false
+# #   #     redact: false
+# #   #     contains_all: false
+# #   - type: BanTopics
+# #     params:
+# #       topics: [
+# #       # Core Safety Categories (Universal across all major providers)
+# #       "violence and physical harm",
+# #       "hate speech and discrimination", 
+# #       "harassment and bullying",
+# #       "adult and sexual content",
+# #       "child safety and exploitation",
+# #       "self-harm and suicide",
+      
+# #       # Illegal Activities (Standard across enterprise products)
+# #       "illegal activities and substances",
+# #       "terrorism and extremism",
+# #       "weapons and explosives",
+# #       "fraud and financial crimes",
+      
+# #       # Privacy and Security (Enterprise requirements)
+# #       "cybersecurity threats and hacking",
+      
+# #       # Professional Liability (Common in enterprise)
+# #       "medical advice and diagnosis",
+# #       "legal advice and representation",
+# #       "financial investment advice",
+      
+# #       # Platform Risk Management
+# #       "misinformation and conspiracy theories",
+# #       "spam and deceptive content"
+# #     ]
+# #       threshold: 0.95
+# #   - type: Bias
+# #     params:
+# #       threshold: 0.97
+# #       model_max_length: 256
+# #   - type: Deanonymize
+# #     params:
+# #       matching_strategy: "exact"
+# #   - type: FactualConsistency
+# #     params:
+# #       minimum_score: 0.5
+# # #  - type: JSON
+# # #    params:
+# # #      required_elements: 0
+# # #      repair: true
+# #   # - type: Language
+# #   #   params:
+# #   #     valid_languages: [ "en" ]
+# #   #     model_max_length: 256
+# #   # - type: LanguageSame
+# #   #   params:
+# #   #     model_max_length: 256
+# #   # - type: NoRefusal
+# #   #   params:
+# #   #     threshold: 0.9
+# #   - type: Regex
+# #     params:
+# #       patterns: ["Bearer [A-Za-z0-9-._~+/]+"]
+# #       is_blocked: true
+# #       match_type: search
+# #       redact: true
+# #   # - type: Relevance
+# #   #   params:
+# #   #     threshold: 0.2
+# #   - type: Sensitive
+# #     params:
+# #       redact: false
+# #       threshold: 0.95
+# #   # - type: Sentiment
+# #   #   params:
+# #   #     threshold: 0.0
+# #   - type: Toxicity
+# #     params:
+# #       threshold: 0.95
+# #       model_max_length: 256

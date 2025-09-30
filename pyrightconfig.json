@@ -1,0 +1,14 @@
+{
+  "exclude": [
+    "build"
+  ],
+  "include": [
+    "tueri",
+    "tests"
+  ],
+  "ignore": [
+    "benchmarks",
+    "examples",
+    "tueri_api"
+  ]
+}

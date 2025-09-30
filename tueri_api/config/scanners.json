@@ -1,0 +1,262 @@
+[
+{
+	"type": "input",
+	"id": "Anonymize",
+	"riskLevel": "high",
+	"definition": "Detects and removes personally identifiable information (PII) from prompts",
+	"threshold_desc": "Detect and anonymize PII in prompts. Higher threshold = less aggressive removal.",
+	"params": { "threshold": 0.50, "language": "en", "preamble": "" },
+	"order": 1
+},
+{
+	"type": "input",
+	"id": "BanTopics",
+	"riskLevel": "high",
+	"definition": "Blocks prompts about specific banned topics (violence, politics, etc.)",
+	"params": { "topics": ["violence and physical harm to individuals", "hate speech and discriminatory content", "illegal activities and criminal activity", "pornography, erotica, adult and sexual content", "terrorism and indiscriminate Weapons", "self-harm and suicide", "medical diagnosis without professional oversight", "legal advice without professional qualification", "tax evasion and financial fraud methods", "insurance fraud and illegal practices", "cybersecurity exploits and hacking techniques", "software piracy and copyright infringement", "political opinions and partisan commentary", "religious discussions and theological debates", "personal relationship advice and dating guidance", "substance abuse and drug-related discussions", "gambling advice and betting strategies", "harassment and workplace bullying", "conspiracy theories and misinformation spreading", "defamatory statements about individuals or organizations", "spam and deceptive content generation", "gender identity and sexual orientation"], "threshold": 0.6 },
+	"order": 2
+},
+{
+	"type": "input",
+	"id": "MaskCode",
+	"riskLevel": "medium",
+	"definition": "Detects and blocks code snippets in prompts",
+	"threshold_desc": "Higher values = stricter code detection. 0.97 blocks most code, 0.5 blocks obvious code only.",
+	"params": { "threshold": 0.97, "mask_token": "[CODE]", "language_threshold": 0.5 },
+	"order": 3
+},
+{
+	"type": "input",
+	"id": "InvisibleText",
+	"riskLevel": "high",
+	"definition": "Detects hidden or invisible Unicode characters",
+	"threshold_desc": "Confidence for detecting hidden Unicode characters. Higher = only obvious invisible text.",
+	"params": {},
+	"order": 4
+},
+{
+	"type": "input",
+	"id": "PromptInjection",
+	"riskLevel": "high",
+	"definition": "Detects prompt injection attacks and manipulation attempts",
+	"threshold_desc": "Injection attack detection sensitivity. Higher = only block obvious attacks.",
+	"params": { "threshold": 0.95, "match_type": "truncate_head_tail" },
+	"order": 5
+},
+{
+	"type": "input",
+	"id": "Regex",
+	"riskLevel": "medium",
+	"definition": "Custom regex pattern matching for specific content",
+	"threshold_desc": "Pattern matching confidence. Adjust based on your regex complexity.",
+	"params": { "patterns": ["Bearer [A-Za-z0-9-._~+/]"], "is_blocked": true, "match_type": "search", "redact": true },
+	"order": 6
+},
+{
+	"type": "input",
+	"id": "Secrets",
+	"riskLevel": "high",
+	"definition": "Detects API keys, passwords, and other secrets",
+	"threshold_desc": "Secret detection confidence. Higher = only block obvious secrets (API keys, passwords).",
+	"params": { "redact_mode": "all" },
+	"order": 7
+},
+{
+	"type": "input",
+	"id": "BanCompetitors",
+	"riskLevel": "low",
+	"definition": "Blocks mentions of competitor names",
+	"threshold_desc": "Confidence level for competitor name detection. Higher = fewer false positives.",
+	"params": { "competitors": ["OpenAI", "Google", "Microsoft"], "threshold": 0.5, "redact": true },
+	"order": 8
+},
+{
+	"type": "input",
+	"id": "BanSubstrings",
+	"riskLevel": "medium",
+	"definition": "Blocks prompts containing specified banned substrings",
+	"threshold_desc": "How strictly to match banned substrings. Higher = exact matches only, lower = fuzzy matching.",
+	"params": { "substrings": ["bypass", "jailbreak", "ignore instructions"], "match_type": "str", "case_sensitive": false, "redact": false, "contains_all": false },
+	"order": 9
+},
+{
+	"type": "input",
+	"id": "Language",
+	"riskLevel": "low",
+	"definition": "Validates prompt language against allowed languages",
+	"threshold_desc": "Language detection confidence. Higher = more certain language identification required.",
+	"params": { "valid_languages": ["en"], "threshold": 0.6, "match_type": "full" },
+	"order": 10
+},
+{
+	"type": "input",
+	"id": "Sentiment",
+	"riskLevel": "medium",
+	"definition": "Analyzes sentiment and blocks overly negative content",
+	"threshold_desc": "Sentiment threshold (-1.0 to 1.0). -1.0 = block very negative only, 0.0 = allow neutral+, 1.0 = block all negative.",
+	"params": { "threshold": -0.3, "lexicon": "vader_lexicon" },
+	"order": 11
+},
+{
+	"type": "input",
+	"id": "TokenLimit",
+	"riskLevel": "low",
+	"definition": "Enforces maximum token limits for prompts",
+	"threshold_desc": "Token limit enforcement. Blocks prompts exceeding the specified token count.",
+	"params": { "limit": 4096, "encoding_name": "cl100k_base" },
+	"order": 12
+},
+{
+	"type": "output",
+	"id": "BanTopics",
+	"riskLevel": "high",
+	"definition": "Blocks outputs about banned topics",
+	"threshold_desc": "Block responses about banned topics. Higher = only clearly related responses.",
+	"params": { "topics": ["violence and physical harm to individuals", "hate speech and discriminatory content", "illegal activities and criminal activity", "pornography, erotica, adult and sexual content", "terrorism and indiscriminate Weapons", "self-harm and suicide", "medical diagnosis without professional oversight", "legal advice without professional qualification", "tax evasion and financial fraud methods", "insurance fraud and illegal practices", "cybersecurity exploits and hacking techniques", "software piracy and copyright infringement", "political opinions and partisan commentary", "religious discussions and theological debates", "personal relationship advice and dating guidance", "substance abuse and drug-related discussions", "gambling advice and betting strategies", "harassment and workplace bullying", "conspiracy theories and misinformation spreading", "defamatory statements about individuals or organizations", "spam and deceptive content generation", "gender identity and sexual orientation"], "threshold": 0.6 },
+	"order": 13
+},
+{
+	"type": "output",
+	"id": "Bias",
+	"riskLevel": "medium",
+	"definition": "Detects bias in model outputs",
+	"threshold_desc": "Detect biased language in outputs. Higher = only flag obvious bias.",
+	"params": { "threshold": 0.97, "match_type": "full" },
+	"order": 14
+},
+{
+	"type": "output",
+	"id": "Deanonymize",
+	"riskLevel": "high",
+	"definition": "Restores anonymized information in outputs",
+	"threshold_desc": "Detect and reverse anonymization in outputs. Higher = only flag clear deanonymization.",
+	"params": { "matching_strategy": "exact" },
+	"order": 15
+},
+{
+	"type": "output",
+	"id": "FactualConsistency",
+	"riskLevel": "high",
+	"definition": "Checks factual consistency with input",
+	"threshold_desc": "Check facts against input. Higher = only flag clear inconsistencies.",
+	"params": { "minimum_score": 0.5 },
+	"order": 16
+},
+{
+	"type": "output",
+	"id": "BadURL",
+	"riskLevel": "high",
+	"definition": "Detects both URL reachability and malicious URLs in outputs",
+	"threshold_desc": "Detect and block bad or malicious URLs in outputs. Higher = only block obvious bad URLs.",
+	"params": { "threshold": 0.95 },
+	"order": 17
+},
+{
+	"type": "output",
+	"id": "Regex",
+	"riskLevel": "medium",
+	"definition": "Custom regex pattern matching in outputs",
+	"threshold_desc": "Custom pattern matching in outputs. Adjust based on pattern complexity.",
+	"params": { "patterns": ["Bearer [A-Za-z0-9-._~+/]"], "is_blocked": true, "match_type": "search", "redact": true },
+	"order": 18
+},
+{
+	"type": "output",
+	"id": "Sensitive",
+	"riskLevel": "high",
+	"definition": "Detects sensitive information in outputs",
+	"threshold_desc": "Detect sensitive info in outputs. Higher = only flag obvious sensitive data.",
+	"params": { "redact": false, "threshold": 0.50, "language": "en" },
+	"order": 19
+},
+{
+	"type": "output",
+	"id": "BanCompetitors",
+	"riskLevel": "low",
+	"definition": "Removes competitor mentions from outputs",
+	"threshold_desc": "Remove competitor mentions from responses. Higher = only obvious mentions.",
+	"params": { "competitors": ["OpenAI", "Google", "Microsoft"], "threshold": 0.5, "redact": true },
+	"order": 20
+},
+{
+	"type": "output",
+	"id": "BanSubstrings",
+	"riskLevel": "medium",
+	"definition": "Removes banned substrings from outputs",
+	"threshold_desc": "Remove banned phrases from outputs. Higher = exact matches only.",
+	"params": { "substrings": ["confidential", "internal"], "match_type": "str", "case_sensitive": false, "redact": true, "contains_all": false },
+	"order": 21
+},
+{
+	"type": "output",
+	"id": "JSON",
+	"riskLevel": "low",
+	"definition": "Validates and repairs JSON in outputs",
+	"threshold_desc": "Validate and repair JSON output. Ensures required elements are present.",
+	"params": { "required_elements": 0, "repair": true },
+	"order": 22
+},
+{
+	"type": "output",
+	"id": "Language",
+	"riskLevel": "low",
+	"definition": "Validates output language",
+	"threshold_desc": "Ensure output language correctness. Higher = stricter language validation.",
+	"params": { "valid_languages": ["en"], "threshold": 0.6, "match_type": "full" },
+	"order": 23
+},
+{
+	"type": "output",
+	"id": "LanguageSame",
+	"riskLevel": "medium",
+	"definition": "Ensures output language matches input language",
+	"threshold_desc": "Match output language to input. Higher = stricter language matching.",
+	"params": { "threshold": 0.6 },
+	"order": 24
+},
+{
+	"type": "output",
+	"id": "MaskCode",
+	"riskLevel": "medium",
+	"definition": "Blocks code snippets in model outputs",
+	"threshold_desc": "Code detection in outputs. Higher = stricter filtering of code responses.",
+	"params": { "threshold": 0.5, "mask_token": "[CODE]", "language_threshold": 0.5 },
+	"order": 25
+},
+{
+	"type": "output",
+	"id": "NoRefusal",
+	"riskLevel": "medium",
+	"definition": "Detects when model refuses to answer",
+	"threshold_desc": "Detect when AI refuses to answer. Higher = only flag clear refusals.",
+	"params": { "threshold": 0.75, "match_type": "full" },
+	"order": 26
+},
+{
+	"type": "output",
+	"id": "NoRefusalLight",
+	"riskLevel": "medium",
+	"definition": "Lightweight refusal detection; flags obvious refusals only",
+	"threshold_desc": "Lightweight refusal detection. Flags obvious refusals only.",
+	"params": {},
+	"order": 27
+},
+{
+	"type": "output",
+	"id": "Relevance",
+	"riskLevel": "medium",
+	"definition": "Ensures output relevance to input prompt",
+	"threshold_desc": "Ensure output relevance to input. Higher = only flag clearly irrelevant responses.",
+	"params": { "threshold": 0.5 },
+	"order": 28
+},
+{
+	"type": "output",
+	"id": "Sentiment",
+	"riskLevel": "medium",
+	"definition": "Analyzes sentiment in outputs",
+	"threshold_desc": "Sentiment threshold (-1.0 to 1.0). -1.0 = block very negative only, 0.0 = allow neutral+, 1.0 = block all negative.",
+	"params": { "threshold": -0.3, "lexicon": "vader_lexicon" },
+	"order": 29
+}
+]
